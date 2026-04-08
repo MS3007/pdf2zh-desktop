@@ -118,8 +118,8 @@
 
 | 平台 | 下载 | 大小 | 启动方式 |
 |------|------|------|---------|
-| 🪟 Windows | [`pdf2zh-desktop-win-v2.2.0.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~340MB | 解压 → 双击 `pdf2zh.bat` |
-| 🍎 macOS | [`pdf2zh-desktop-mac-v2.2.0.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~620MB | 解压 → 双击 `pdf2zh.app` |
+| 🪟 Windows | [`pdf2zh-desktop-win-v2.2.3.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~340MB | 解压 → 双击 `pdf2zh.bat` |
+| 🍎 macOS | [`pdf2zh-desktop-mac-v2.2.3.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~500MB | 解压 → 双击 `pdf2zh.app` |
 
 ### 🖱️ 第二步：启动
 
