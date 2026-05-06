@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>pdf2zh-desktop · macOS 使用教程</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafafa; --panel:#fff; --ink:#1a1a1a; --soft:#666; --line:#e5e5e7;
+    --blue:#0a84ff; --green:#34c759; --red:#ff453a; --amber:#ff9f0a; --purple:#bf5af2;
+    --shadow:0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:60px 32px 120px}
+  nav.top{position:sticky;top:0;background:rgba(250,250,250,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line);z-index:100}
+  nav.top .inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:24px;font-size:14px}
+  /* MetaEidos logo — 原封不动来自 metaeidos.com .logo */
+  nav.top .me-logo{font-family:'DM Sans','Noto Sans SC',-apple-system,sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.5px;color:#222;text-decoration:none;padding-right:14px;border-right:1px solid var(--line);margin-right:4px}
+  nav.top .me-logo:hover{text-decoration:none;color:#d97338}
+  nav.top .brand{font-weight:600;font-size:15px}
+  nav.top .brand .ver{color:var(--soft);font-weight:400;margin-left:6px;font-size:12px}
+  nav.top a.tab{color:var(--ink);opacity:0.7}
+  nav.top a.tab:hover{opacity:1;text-decoration:none}
+  nav.top .spacer{flex:1}
+
+  .hero{padding:80px 0 60px;text-align:center}
+  .hero .eyebrow{color:var(--blue);font-size:14px;font-weight:600;letter-spacing:0.5px;margin-bottom:14px}
+  .hero h1{font-size:52px;line-height:1.15;font-weight:700;letter-spacing:-0.5px;margin-bottom:18px}
+  .hero h1 .grad{background:linear-gradient(135deg,#0a84ff 0%,#bf5af2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero .sub{color:var(--soft);font-size:19px;max-width:680px;margin:0 auto 28px}
+  .hero .meta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;color:var(--soft);font-size:13px}
+  .hero .meta span{padding:4px 12px;background:var(--panel);border:1px solid var(--line);border-radius:999px}
+
+  section.tutorial{margin-top:80px;padding:48px;background:var(--panel);border-radius:24px;box-shadow:var(--shadow)}
+  section.tutorial .head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  section.tutorial .head .num{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:1.5px}
+  section.tutorial .head h2{font-size:36px;font-weight:700;letter-spacing:-0.3px}
+  section.tutorial .lead{color:var(--soft);font-size:17px;margin-bottom:32px;max-width:720px}
+
+  .stage{position:relative;border-radius:14px;overflow:hidden;background:#f0f0f0;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.08);margin-bottom:32px}
+  .stage img{display:block;width:100%;height:auto}
+  .stage .pin{position:absolute;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(255,69,58,0.25),0 4px 12px rgba(255,69,58,0.4);transform:translate(-50%,-50%);z-index:5;font-family:-apple-system,SF Pro Display,sans-serif;cursor:default;animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(255,69,58,0.2),0 4px 12px rgba(255,69,58,0.35)}50%{box-shadow:0 0 0 10px rgba(255,69,58,0.05),0 4px 12px rgba(255,69,58,0.35)}}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .step{display:flex;gap:16px;padding:20px;background:#fafafa;border:1px solid var(--line);border-radius:14px;transition:all 0.2s}
+  .step:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.05)}
+  .step .badge{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:-apple-system,SF Pro Display,sans-serif}
+  .step .body{flex:1;min-width:0}
+  .step .body h4{font-size:15px;font-weight:600;margin-bottom:6px}
+  .step .body p{color:var(--soft);font-size:13.5px;line-height:1.6}
+  .step .body code{background:#eaeaef;padding:1px 6px;border-radius:4px;font-size:12.5px;font-family:SF Mono,Monaco,Menlo,monospace}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:24px}
+  .card{padding:22px;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:12px;transition:all 0.2s}
+  .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.08);border-color:#d0d0d6}
+  .card .top{display:flex;align-items:center;gap:10px}
+  .card .top .icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+  .card .top h5{font-size:16px;font-weight:600}
+  .card .top .tag{margin-left:auto;font-size:11px;padding:3px 8px;background:#f0f0f3;border-radius:6px;color:var(--soft);font-weight:500}
+  .card .top .tag.rec{background:#34c759;color:#fff}
+  .card .top .tag.free{background:#0a84ff;color:#fff}
+  .card .desc{color:var(--soft);font-size:13.5px;flex:1;line-height:1.65}
+  .card .links{display:flex;flex-wrap:wrap;gap:8px;font-size:12.5px}
+  .card .links a{padding:4px 10px;background:#f0f0f3;border-radius:6px;color:var(--ink)}
+  .card .links a:hover{background:#e0e0e6;text-decoration:none}
+
+  .decision{margin-top:28px;padding:24px;background:linear-gradient(135deg,#f0f7ff,#fff);border:1px solid #d0e3ff;border-radius:16px}
+  .decision h4{font-size:17px;margin-bottom:14px;color:var(--blue)}
+  .decision .dec-row{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed #d0e3ff}
+  .decision .dec-row:last-child{border-bottom:0}
+  .decision .dec-row .q{font-weight:600;font-size:14px}
+  .decision .dec-row .a{color:var(--soft);font-size:14px}
+  .decision .dec-row .a strong{color:var(--ink);font-weight:600}
+
+  .notice{padding:18px 22px;border-radius:12px;margin:24px 0;font-size:14px;display:flex;gap:14px;align-items:flex-start}
+  .notice.info{background:#f0f7ff;border:1px solid #d0e3ff;color:#0a4d99}
+  .notice.warn{background:#fff8e6;border:1px solid #ffe399;color:#7a5a00}
+  .notice.tip{background:#f0fff4;border:1px solid #c3edd0;color:#1d6d3a}
+  .notice .ico{flex-shrink:0;font-weight:700;font-size:16px}
+
+  aside.toc{position:fixed;top:120px;right:max(20px,calc((100vw - 1280px)/2 - 200px));width:200px;font-size:13px;display:none}
+  @media (min-width:1500px){aside.toc{display:block}}
+  aside.toc h6{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--soft);margin-bottom:10px}
+  aside.toc a{display:block;padding:6px 0;color:var(--soft);border-left:2px solid transparent;padding-left:12px;margin-left:-14px}
+  aside.toc a:hover,aside.toc a.active{color:var(--blue);border-left-color:var(--blue);text-decoration:none}
+
+  footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--line);text-align:center;color:var(--soft);font-size:13px}
+  footer p{margin:6px 0}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a href="https://www.metaeidos.com/" target="_blank" rel="noopener" class="me-logo" title="MetaEidos · 北京知元智行科技有限公司">MetaEidos</a>
+    <span class="brand">pdf2zh-desktop<span class="ver">macOS · v2.2.6</span></span>
+    <a href="#install" class="tab">安装</a>
+    <a href="#sec-translate" class="tab">翻译</a>
+    <a href="#sec-settings" class="tab">设置</a>
+    <a href="#sec-reading" class="tab">阅读</a>
+    <a href="#sec-about" class="tab">关于</a>
+    <a href="#api" class="tab">买 API</a>
+    <a href="#ocr" class="tab">扫描件</a>
+    <a href="#faq" class="tab">FAQ</a>
+    <span class="spacer"></span>
+    <a href="https://github.com/AaronGIG/pdf2zh-desktop-mac">GitHub ↗</a>
+  </div>
+</nav>
+
+<aside class="toc">
+  <h6>目录</h6>
+  <a href="#install">安装与启动</a>
+  <a href="#sec-translate">① 翻译页</a>
+  <a href="#sec-settings">② 设置页</a>
+  <a href="#sec-reading">③ 阅读页</a>
+  <a href="#sec-about">④ 关于页</a>
+  <a href="#api">买 API · 服务推荐</a>
+  <a href="#ocr">扫描件 / OCR 加文字层</a>
+  <a href="#faq">常见问题</a>
+</aside>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">macOS Edition · v2.2.6</div>
+    <h1>把外文论文翻成<span class="grad">中文 PDF</span><br>排版照旧、公式不糊</h1>
+    <p class="sub">pdf2zh-desktop 是一款 macOS 学术 PDF 翻译工具，保留原始排版、公式、图表，支持多家翻译服务，自带阅读器与 AI 助手。本教程用真实截图带你走完每一步操作。</p>
+    <div class="meta">
+      <span>📐 保留排版</span>
+      <span>🧮 公式不糊</span>
+      <span>📚 批量翻译</span>
+      <span>🪄 AI 助手</span>
+      <span>🌐 20+ 翻译服务</span>
+      <span>📖 内置阅读器</span>
+    </div>
+  </header>
+
+  <section class="tutorial" id="install">
+    <div class="head">
+      <span class="num">START</span>
+      <h2>安装与启动</h2>
+    </div>
+    <p class="lead">从 GitHub Release 下载 <code>pdf2zh-desktop-mac-vx.x.x.zip</code>，解压后把 <code>pdf2zh-desktop.app</code> 拖到「应用程序」即可。首次启动如果系统提示「无法验证开发者」，请去 <strong>系统设置 → 隐私与安全性</strong> 点「仍要打开」。</p>
+    <div class="notice info">
+      <span class="ico">ⓘ</span>
+      <div>
+        <strong>系统要求：</strong> macOS 12 (Monterey) 及以上 · Apple Silicon / Intel 双架构 · 首次启动会下载 ~80MB 字体与字典缓存到 <code>~/.cache/babeldoc</code>。
+      </div>
+    </div>
+    <div class="notice warn">
+      <span class="ico">⚠</span>
+      <div>
+        <strong>App 没有签名</strong>（个人开发者）。如果首次打开被 Gatekeeper 拦截，在 Finder 里 <strong>右键 → 打开</strong>，或者执行一次 <code>xattr -cr /Applications/pdf2zh-desktop.app</code> 解除隔离属性。
+      </div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="sec-translate">
+    <div class="head">
+      <span class="num">PAGE 01</span>
+      <h2>① 翻译页 — 主战场</h2>
+    </div>
+    <p class="lead">这是你日常用得最多的页面。把 PDF 拖到上方的虚线框，挑一个翻译服务，点最下面的「开始翻译」就行。所有选项都有合理默认，第一次用直接拖文件 + 点开始即可出结果。</p>
+
+    <div class="stage" id="stage-translate">
+      <img src="screenshots/tab-01-translate.png" alt="翻译页截图">
+      <div class="pin" style="left:7%;top:13.5%">1</div>
+      <div class="pin" style="left:30%;top:18%">2</div>
+      <div class="pin" style="left:23.5%;top:34.5%">3</div>
+      <div class="pin" style="left:39%;top:34.5%">4</div>
+      <div class="pin" style="left:23.5%;top:43.5%">5</div>
+      <div class="pin" style="left:39%;top:43.5%">6</div>
+      <div class="pin" style="left:23.5%;top:53.5%">7</div>
+      <div class="pin" style="left:36.5%;top:53.5%">8</div>
+      <div class="pin" style="left:23.5%;top:64.5%">9</div>
+      <div class="pin" style="left:55.5%;top:87.5%">10</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="badge">1</div><div class="body"><h4>左侧导航</h4><p>四个 Tab：翻译 / 阅读 / 设置 / 关于。点「设置」配 API Key（首次必做），点「阅读」看历史译文。</p></div></div>
+      <div class="step"><div class="badge">2</div><div class="body"><h4>拖放区</h4><p>把一个或多个 PDF 直接拖进来，也可以点击选择文件。<strong>支持批量</strong>：拖进 5 个文件就排队翻 5 个。</p></div></div>
+      <div class="step"><div class="badge">3</div><div class="body"><h4>源语言</h4><p>原文语言。一般保持 <code>English</code>。如果你翻日文/德文，下拉选对应语种 — 选错会导致句子拆分错乱。</p></div></div>
+      <div class="step"><div class="badge">4</div><div class="body"><h4>目标语言</h4><p>翻成什么语种。默认 <code>中文(简体)</code>，可改繁中、日、韩、英、俄、法、德、意、葡、西、阿等 20+ 语言。</p></div></div>
+      <div class="step"><div class="badge">5</div><div class="body"><h4>翻译服务</h4><p>核心选项。Google 免费但慢且需翻墙；DeepSeek/通义千问/智谱用 API Key，质量好且便宜。<a href="#api">→ 怎么选见下文</a></p></div></div>
+      <div class="step"><div class="badge">6</div><div class="body"><h4>页码范围</h4><p>默认全部。也可填 <code>1-10</code> 只翻前 10 页，或 <code>1,3,5-8</code> 跳着翻。<strong>建议先小范围试翻</strong>验证服务可用。</p></div></div>
+      <div class="step"><div class="badge">7</div><div class="body"><h4>输出格式</h4><p>三选一：<strong>左右并排</strong>（推荐 · 原文译文同页对照）/ <strong>双语对照</strong>（先原文页后译文页）/ <strong>仅译文</strong>（只输出中文版）。</p></div></div>
+      <div class="step"><div class="badge">8</div><div class="body"><h4>线程数</h4><p>同时跑多少个翻译请求。免费服务别开太大（容易封 IP），DeepSeek/通义建议 <code>16-32</code>，长文本翻得快。</p></div></div>
+      <div class="step"><div class="badge">9</div><div class="body"><h4>分块翻译 / 扫描件 / 表格 / OCR</h4><p>大文件（>50 页）勾「分块翻译」，按 50 页一块，间隔 10 秒，避免触发 API 限流。扫描版 PDF 勾「扫描版 PDF」启用 OCR — <a href="#ocr">但效果有限，见下文</a>。</p></div></div>
+      <div class="step"><div class="badge">10</div><div class="body"><h4>开始翻译</h4><p>点这里开跑。状态会变成「翻译中…」并显示进度条。完成后会自动跳到「阅读」页预览结果。<strong>骰子按钮</strong>：随便从内置示例论文里抽一篇试翻，验证流程。</p></div></div>
+    </div>
+
+    <div class="notice tip">
+      <span class="ico">★</span>
+      <div><strong>第一次用？</strong> 拖一个 5-10 页的英文论文进来，服务选 <code>Google 翻译</code>（不需要 Key），点开始 — 30 秒后你就能看到中英对照的 PDF 了。然后再回头去配 DeepSeek 提升质量。</div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="sec-settings">
+    <div class="head">
+      <span class="num">PAGE 02</span>
+      <h2>② 设置页 — 配 API & 偏好</h2>
+    </div>
+    <p class="lead">所有翻译服务的 API Key 都填在这里。每个服务独立配置，互不影响。配好后翻译页才能选到对应服务。</p>
+
+    <div class="stage" id="stage-settings">
+      <img src="screenshots/tab-02-settings.png" alt="设置页截图">
+      <div class="pin" style="left:27%;top:8.7%">1</div>
+      <div class="pin" style="left:27%;top:17.5%">2</div>
+      <div class="pin" style="left:27%;top:25.2%">3</div>
+      <div class="pin" style="left:27%;top:32.8%">4</div>
+      <div class="pin" style="left:42%;top:37.8%">5</div>
+      <div class="pin" style="left:27%;top:46.5%">6</div>
+      <div class="pin" style="left:74.5%;top:10.5%">7</div>
+      <div class="pin" style="left:74.5%;top:20.5%">8</div>
+      <div class="pin" style="left:74.5%;top:36%">9</div>
+      <div class="pin" style="left:74.5%;top:53.5%">10</div>
+      <div class="pin" style="left:93%;top:84.5%">11</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="badge">1</div><div class="body"><h4>翻译服务选择</h4><p>下拉选你要配的服务。<strong>每选一个服务，下面的 Key/URL/Model 字段会切换</strong>。每个服务的配置独立保存。</p></div></div>
+      <div class="step"><div class="badge">2</div><div class="body"><h4>API Key</h4><p>从服务商后台复制粘贴。本地存储为 base64 + 文件权限 600，不上传任何服务器。<strong>失焦自动保存</strong>（点别处或按回车）。</p></div></div>
+      <div class="step"><div class="badge">3</div><div class="body"><h4>模型</h4><p>下拉选具体模型。DeepSeek 推荐 <code>deepseek-chat</code>（便宜快），<code>deepseek-reasoner</code> 准但慢且贵。OpenAI 用 <code>gpt-4o-mini</code>。</p></div></div>
+      <div class="step"><div class="badge">4</div><div class="body"><h4>Base URL</h4><p>API 端点。一般保持默认，除非你用三方代理（Cloudflare AI Gateway / OpenRouter / 自建中转）。</p></div></div>
+      <div class="step"><div class="badge">5</div><div class="body"><h4>测试连接</h4><p>点一下让程序发一个最小翻译请求验证 Key 有效。失败时会弹错误信息（额度不足 / Key 无效 / 网络超时）。</p></div></div>
+      <div class="step"><div class="badge">6</div><div class="body"><h4>AI 助手（独立配置）</h4><p>阅读页右侧的「AI 问答」用的服务。可以和翻译服务<strong>用同一家</strong>（默认勾上「使用独立配置」就关闭，沿用翻译服务）。也可以让翻译用便宜的，AI 助手用更聪明的。</p></div></div>
+      <div class="step"><div class="badge">7</div><div class="body"><h4>翻译设置</h4><p>四个开关：<strong>深色模式</strong>（界面跟随）/ <strong>翻译缓存</strong>（建议开 · 同一段重复翻只调一次 API）/ <strong>AI 布局检测</strong>（实验性，开了会更准但更慢）/ <strong>字体子集化</strong>（开了输出 PDF 更小）。</p></div></div>
+      <div class="step"><div class="badge">8</div><div class="body"><h4>翻译提示词</h4><p>给 AI 的指令模板。默认「直译」，你可以改成「学术」「口语」「保留专业术语」等风格，<strong>支持多套预设</strong>，点「保存 / 新建 / 导入 / 导出」管理。改完点「保存」生效。</p></div></div>
+      <div class="step"><div class="badge">9</div><div class="body"><h4>术语表</h4><p>固定专业名词的翻法。比如 <code>Transformer → Transformer（不译）</code>、<code>token → 词元</code>。<strong>每个学科一份术语表</strong>，翻译前选对的一份。</p></div></div>
+      <div class="step"><div class="badge">10</div><div class="body"><h4>Zotero 联动</h4><p>把翻译好的 PDF 自动导入 Zotero 文献库。点「一键安装」装 Zotero 插件，配好后翻译完成会问你「是否导入 Zotero」。</p></div></div>
+      <div class="step"><div class="badge">11</div><div class="body"><h4>打开数据目录</h4><p>跳转到 <code>~/.config/pdf2zh/</code>。出问题时把 <code>config.json</code> 和 <code>history.json</code> 截图发给我们排查。<strong>不要手动改</strong>这两个文件，App 会覆盖。</p></div></div>
+    </div>
+
+    <div class="notice info">
+      <span class="ico">ⓘ</span>
+      <div><strong>API Key 在哪买？</strong> 直接跳到下面的 <a href="#api">「买 API · 服务推荐」</a>章节，列了每家服务的注册地址、价格、推荐场景。</div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="sec-reading">
+    <div class="head">
+      <span class="num">PAGE 03</span>
+      <h2>③ 阅读页 — 内置阅读器</h2>
+    </div>
+    <p class="lead">翻译完成后会自动跳到这一页。左侧是历史记录，中间是 PDF 预览，右侧（点开后）是 AI 助手。<strong>关键功能：双语切换、AI 划词问答、跨译文高亮笔记</strong>。</p>
+
+    <div class="stage" id="stage-reading">
+      <img src="screenshots/tab-03-reading-clean.png" alt="阅读页截图">
+      <div class="pin" style="left:18%;top:4.5%">1</div>
+      <div class="pin" style="left:20%;top:13%">2</div>
+      <div class="pin" style="left:26.5%;top:4%">3</div>
+      <div class="pin" style="left:29.9%;top:4%">4</div>
+      <div class="pin" style="left:34.5%;top:4%">5</div>
+      <div class="pin" style="left:39.8%;top:4%">6</div>
+      <div class="pin" style="left:51.5%;top:4%">7</div>
+      <div class="pin" style="left:78%;top:4%">8</div>
+      <div class="pin" style="left:84%;top:4%">9</div>
+      <div class="pin" style="left:91%;top:4%">10</div>
+      <div class="pin" style="left:26.5%;top:96%">11</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="badge">1</div><div class="body"><h4>翻译历史 + 缩略图 + 清空</h4><p>左栏顶部。点「缩略图」切换列表/缩略图视图，点「清空」删除全部历史（不可逆，会问确认）。下方「全部 / 自建标签」按学科/项目分类。</p></div></div>
+      <div class="step"><div class="badge">2</div><div class="body"><h4>历史记录列表</h4><p>每翻译一份 PDF 自动添加一条。点击一条 = 直接打开该译文的 Side by Side 视图。<strong>右键</strong>可重命名、删除、移到分组。</p></div></div>
+      <div class="step"><div class="badge">3</div><div class="body"><h4>Dual</h4><p>双语对照模式：先一页原文，再一页译文，交替展示。适合精读 / 反复对照术语。</p></div></div>
+      <div class="step"><div class="badge">4</div><div class="body"><h4>Mono</h4><p>仅译文模式：只显示中文版。适合快速浏览全文掌握大意。</p></div></div>
+      <div class="step"><div class="badge">5</div><div class="body"><h4>Side by Side</h4><p>左右并排（默认）：左原文右译文，<strong>滚动同步</strong>。最常用，推荐。</p></div></div>
+      <div class="step"><div class="badge">6</div><div class="body"><h4>连续 / 单页</h4><p>滚动行为切换。「连续」=网页式无限滚动，「单页」=一次显示一页（按 → 翻页）。</p></div></div>
+      <div class="step"><div class="badge">7</div><div class="body"><h4>打开 + 翻页器</h4><p>「打开」按钮：手动选别的 PDF。右边的 <code>« &lt; 1/N &gt; »</code> 是首页/上页/页码/下页/末页。</p></div></div>
+      <div class="step"><div class="badge">8</div><div class="body"><h4>缩放滑块 + 150%</h4><p>拖滑块调缩放比例（25%-300%），右边显示当前百分比。Cmd+滚轮也能缩放。</p></div></div>
+      <div class="step"><div class="badge">9</div><div class="body"><h4>适宽 / 适页</h4><p>「适宽」让 PDF 宽度撑满，竖向滚动；「适页」整页显示，左右居中。看公式多的论文用「适宽」。</p></div></div>
+      <div class="step"><div class="badge">10</div><div class="body"><h4>AI 问答 / 高亮 / 全屏</h4><p><strong>AI 问答</strong>：右侧抽屉，划词问 AI 解释。<strong>高亮</strong>：选中文字加荧光笔，跨语言同步（高亮原文，译文版同位置自动高亮）。<strong>全屏</strong>：F 键切换沉浸阅读。</p></div></div>
+      <div class="step"><div class="badge">11</div><div class="body"><h4>选择记录查看详情</h4><p>预览区空时的提示。点左侧任一历史记录或翻译完成后自动加载，这块就会变成 PDF 预览。</p></div></div>
+    </div>
+
+    <div class="notice tip">
+      <span class="ico">★</span>
+      <div><strong>AI 问答用法：</strong>在 PDF 预览里选中一段中文/英文 → 点右上「AI 问答」→ 在抽屉里直接问「这段什么意思」「这个公式怎么推导」「举个例子」。AI 会拿你选的文字 + 上下文一起回答。</div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="sec-about">
+    <div class="head">
+      <span class="num">PAGE 04</span>
+      <h2>④ 关于页 — 反馈 & 支持</h2>
+    </div>
+    <p class="lead">查看版本号、特性列表、跳转到 GitHub、加 QQ 群、看小红书支持者墙。出 bug 也从这里走。</p>
+
+    <div class="stage" id="stage-about">
+      <img src="screenshots/tab-04-about.png" alt="关于页截图">
+      <div class="pin" style="left:62%;top:8.2%">1</div>
+      <div class="pin" style="left:20%;top:30%">2</div>
+      <div class="pin" style="left:51%;top:10%">3</div>
+      <div class="pin" style="left:97%;top:7%">4</div>
+      <div class="pin" style="left:78%;top:45%">5</div>
+      <div class="pin" style="left:70.4%;top:63.8%">6</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="badge">1</div><div class="body"><h4>版本与简介</h4><p>左上角是当前版本号（v2.2.6）。下面是简短描述：「开箱即用的学术 PDF 翻译工具」。</p></div></div>
+      <div class="step"><div class="badge">2</div><div class="body"><h4>macOS 版特性</h4><p>列出本版本的核心能力：原生设计、深色模式、Dual/Mono/Side by Side、历史管理、智能分块、触摸板手势、术语表、AI 问答、Zotero 联动等。</p></div></div>
+      <div class="step"><div class="badge">3</div><div class="body"><h4>小红书账号</h4><p>「艾伦说」是项目作者的小红书号。发布更新预告、使用技巧、用户案例。点「关注」直接跳到主页。</p></div></div>
+      <div class="step"><div class="badge">4</div><div class="body"><h4>GitHub ↗</h4><p>跳转到 <a href="https://github.com/AaronGIG/pdf2zh-desktop-mac">仓库主页</a>。看 Release 页下载新版、看 Issue 报 bug、看 Star 涨了多少。</p></div></div>
+      <div class="step"><div class="badge">5</div><div class="body"><h4>支持者墙</h4><p>感谢所有在小红书互动 / Star / 反馈 bug 的朋友。每个圆圈代表一位用户（昵称首字母）。</p></div></div>
+      <div class="step"><div class="badge">6</div><div class="body"><h4>进入 QQ 群</h4><p>桌面交流群。<strong>这是最快得到帮助的地方</strong> — 翻译异常、API 问题、功能建议丢群里，群主和老用户会回答。</p></div></div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="api">
+    <div class="head">
+      <span class="num">SERVICE</span>
+      <h2>买 API · 服务推荐</h2>
+    </div>
+    <p class="lead">翻译需要调外部 AI 服务。每家服务都要去对应官网注册账号 → 充值 → 创建 API Key → 粘贴到设置页。下面按「场景」推荐，照着选不会错。</p>
+
+    <div class="decision">
+      <h4>我该选哪家？</h4>
+      <div class="dec-row">
+        <div class="q">最便宜质量好</div>
+        <div class="a"><strong>DeepSeek</strong> · 千 token ¥0.001 · 学术翻译质量最佳性价比，一篇 30 页论文约 ¥0.05</div>
+      </div>
+      <div class="dec-row">
+        <div class="q">完全免费</div>
+        <div class="a"><strong>Google 翻译</strong> · 不要 Key · 但要稳定翻墙，且大文件容易被限流；适合临时小文件</div>
+      </div>
+      <div class="dec-row">
+        <div class="q">国内不翻墙</div>
+        <div class="a"><strong>通义千问 / 智谱 / DeepSeek</strong> · 国内服务商直连，速度最快，无需代理</div>
+      </div>
+      <div class="dec-row">
+        <div class="q">质量最高</div>
+        <div class="a"><strong>OpenAI GPT-4o</strong> · 文学性最好但贵 · 一篇 30 页论文约 ¥3-5 · 需海外信用卡或代理购买</div>
+      </div>
+      <div class="dec-row">
+        <div class="q">学校或公司有内网模型</div>
+        <div class="a"><strong>OpenAI 兼容 / Ollama 本地</strong> · 自定义 Base URL，连任何 OpenAI-API 兼容服务（vLLM / Xinference / Ollama）</div>
+      </div>
+    </div>
+
+    <h4 style="margin:32px 0 0;font-size:18px;">主流服务清单</h4>
+
+    <div class="grid">
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#1a73e8">D</div>
+          <h5>DeepSeek</h5>
+          <span class="tag rec">最推荐</span>
+        </div>
+        <p class="desc">国产大模型 · 学术翻译质量第一档 · 千 token ¥0.001（输入），¥0.002（输出） · 注册送 ¥10 额度可翻 200 篇论文 · 模型选 <code>deepseek-chat</code>。</p>
+        <div class="links">
+          <a href="https://platform.deepseek.com/" target="_blank">注册 / 充值</a>
+          <a href="https://platform.deepseek.com/api_keys" target="_blank">创建 Key</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#ff6f00">Q</div>
+          <h5>通义千问 (DashScope)</h5>
+          <span class="tag rec">国内优选</span>
+        </div>
+        <p class="desc">阿里云出品 · 稳定速度快 · 千 token ¥0.0008-0.012（按模型档位）· 注册送大量免费额度 · 推荐模型 <code>qwen-plus</code> / <code>qwen-max</code>。</p>
+        <div class="links">
+          <a href="https://bailian.console.aliyun.com/" target="_blank">百炼平台</a>
+          <a href="https://help.aliyun.com/zh/dashscope/" target="_blank">文档</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#5b6cff">Z</div>
+          <h5>智谱 ChatGLM</h5>
+        </div>
+        <p class="desc">清华系 · GLM-4 系列 · 千 token ¥0.001（GLM-4-Flash 免费档）· 注册送资源包 · 适合预算敏感大量翻译。</p>
+        <div class="links">
+          <a href="https://open.bigmodel.cn/" target="_blank">开放平台</a>
+          <a href="https://open.bigmodel.cn/usercenter/apikeys" target="_blank">创建 Key</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#10a37f">O</div>
+          <h5>OpenAI</h5>
+        </div>
+        <p class="desc">质量天花板 · GPT-4o-mini 性价比可以 · 千 token $0.00015（输入）· 但需<strong>海外信用卡</strong>充值，国内信用卡多被风控。</p>
+        <div class="links">
+          <a href="https://platform.openai.com/api-keys" target="_blank">API Keys</a>
+          <a href="https://openai.com/pricing" target="_blank">价格</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#7c3aed">G</div>
+          <h5>Google Gemini</h5>
+        </div>
+        <p class="desc">Gemini 1.5 Flash 免费档每分钟 15 请求 · 长文本能力强（2M token 窗口）· 国内需翻墙 · 用 Google 账号即可申请 Key。</p>
+        <div class="links">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank">AI Studio</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#00a1d6">S</div>
+          <h5>SiliconFlow 硅基流动</h5>
+        </div>
+        <p class="desc">国内 LLM 聚合中转 · 一个 Key 调 20+ 模型（DeepSeek/Qwen/Yi/Llama）· 价格对齐源厂 · 注册送 ¥14 体验金。</p>
+        <div class="links">
+          <a href="https://cloud.siliconflow.cn/" target="_blank">注册</a>
+          <a href="https://cloud.siliconflow.cn/account/ak" target="_blank">API Key</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#0077c8">D</div>
+          <h5>DeepL</h5>
+        </div>
+        <p class="desc">欧系翻译质量第一 · 但学术领域不如 LLM · 月 50万字符免费 · 注册需海外手机号或信用卡 · 不支持公式术语保留。</p>
+        <div class="links">
+          <a href="https://www.deepl.com/pro-api" target="_blank">DeepL Pro API</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#34c759">F</div>
+          <h5>Google 翻译</h5>
+          <span class="tag free">免费</span>
+        </div>
+        <p class="desc">不需要 Key，但需要稳定翻墙环境。质量一般，大文件容易被限流。<strong>仅用于第一次试用流程</strong>，正式用强烈建议切到 LLM 服务。</p>
+        <div class="links">
+          <a href="#sec-translate">→ 翻译页直接选</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#666">∞</div>
+          <h5>OpenAI 兼容 / 自建</h5>
+        </div>
+        <p class="desc">设置页选「OpenAI-liked」，Base URL 填你自己的 vLLM/Xinference/Ollama 地址（如 <code>http://localhost:11434/v1</code>）。完全本地，零成本，质量看你跑的模型。</p>
+        <div class="links">
+          <a href="https://ollama.com/" target="_blank">Ollama</a>
+          <a href="https://github.com/vllm-project/vllm" target="_blank">vLLM</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice warn" style="margin-top:28px">
+      <span class="ico">⚠</span>
+      <div>
+        <strong>第一次充值前先小额试用：</strong>每家都先充 ¥10 / $5，跑两篇论文确认翻译质量、速度、计费方式都符合预期，再决定是不是大额充值。<strong>API Key 永远只放本地</strong>，不要发到群里、邮件里、GitHub 仓库里。
+      </div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="ocr">
+    <div class="head">
+      <span class="num">OCR</span>
+      <h2>扫描版 PDF · 文字层补全方案</h2>
+    </div>
+    <p class="lead">如果你的 PDF 是扫描件（图片型，选不了文字、复制不出来），翻译页的「OCR 识别」勾选框只能做<strong>非常基础的文字识别</strong>，对复杂版面、公式、表格、多栏论文识别率低。<strong>强烈建议先用专业 OCR 软件</strong>给 PDF 加一层文字层，再回到 pdf2zh 翻译，效果天差地别。</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#003a70">A</div>
+          <h5>ABBYY FineReader</h5>
+          <span class="tag rec">最准</span>
+        </div>
+        <p class="desc">业界标杆 · 中英日多语种 · 公式识别可用 · 表格保留结构 · macOS 版 ¥1300/年 · 大量论文 OCR 必备。</p>
+        <div class="links">
+          <a href="https://pdf.abbyy.com/" target="_blank">官网</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#ee2f24">A</div>
+          <h5>Adobe Acrobat Pro</h5>
+        </div>
+        <p class="desc">Acrobat Pro DC 自带 OCR · 「工具 → 增强扫描」一键加文字层 · ¥130/月订阅 · 已有 Adobe 全家桶的人首选。</p>
+        <div class="links">
+          <a href="https://www.adobe.com/cn/acrobat.html" target="_blank">Acrobat</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#f5b400">B</div>
+          <h5>白描 / Text Scanner (Mac)</h5>
+          <span class="tag rec">便宜好用</span>
+        </div>
+        <p class="desc">App Store 搜「白描」· ¥38 买断 · 中文 OCR 准 · 拖入 PDF 一键识别导出可搜索 PDF · 小批量论文足够。</p>
+        <div class="links">
+          <a href="https://baimiao.uzero.cn/" target="_blank">官网</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#3776ab">T</div>
+          <h5>OCRmyPDF (开源)</h5>
+          <span class="tag free">免费</span>
+        </div>
+        <p class="desc">Tesseract 内核 · 命令行 · <code>brew install ocrmypdf</code> 然后 <code>ocrmypdf in.pdf out.pdf</code> · 中文加 <code>-l chi_sim+eng</code>。</p>
+        <div class="links">
+          <a href="https://github.com/ocrmypdf/OCRmyPDF" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#1664d9">P</div>
+          <h5>PDFgear / PDF24</h5>
+          <span class="tag free">免费</span>
+        </div>
+        <p class="desc">免费 PDF 工具箱内置 OCR · 中等准度 · 适合一两个文件临时用 · 都有 macOS 版。</p>
+        <div class="links">
+          <a href="https://www.pdfgear.com/" target="_blank">PDFgear</a>
+          <a href="https://tools.pdf24.org/" target="_blank">PDF24</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="icon" style="background:#0086cc">B</div>
+          <h5>百度 / 腾讯 OCR API</h5>
+        </div>
+        <p class="desc">通用文字识别 + 公式识别 API · 千次 ¥0.5-2 · 需要自己写脚本调用 → 拼回 PDF · 适合开发者批量处理。</p>
+        <div class="links">
+          <a href="https://cloud.baidu.com/product/ocr" target="_blank">百度 OCR</a>
+          <a href="https://cloud.tencent.com/product/ocr" target="_blank">腾讯 OCR</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice tip" style="margin-top:24px">
+      <span class="ico">★</span>
+      <div>
+        <strong>推荐工作流：</strong>
+        <ol style="margin-top:8px;padding-left:20px;line-height:2">
+          <li>扫描 PDF → 用 <strong>白描 / ABBYY / OCRmyPDF</strong> 加文字层 → 输出新 PDF</li>
+          <li>用 Acrobat / Preview 打开新 PDF，确认能选中文字、能复制</li>
+          <li>把这个新 PDF 拖进 pdf2zh-desktop · <strong>不勾「扫描版 PDF」「OCR 识别」</strong></li>
+          <li>正常翻译 — 这时候得到的版式、公式、术语效果就跟原生 PDF 一样好</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="tutorial" id="faq">
+    <div class="head">
+      <span class="num">FAQ</span>
+      <h2>常见问题</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="top"><h5>翻译卡在 0% 不动？</h5></div>
+        <p class="desc">通常是 API Key 没配 / 配错。回设置页点「测试连接」验证。免费 Google 翻译需要稳定翻墙环境。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>大文件提示限流 / 失败？</h5></div>
+        <p class="desc">翻译页勾「分块翻译」，每块 50 页，间隔 10 秒。或线程数从 16 调到 4-8。免费服务尤其需要。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>公式翻乱 / 字符错位？</h5></div>
+        <p class="desc">v2.2.5+ 已修复 MS-Mincho 误判 / DeepSeek 注释抑制。如果仍异常，关掉「AI 布局检测」试试。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>App 打开闪退 / 崩溃？</h5></div>
+        <p class="desc">删掉 <code>~/.cache/babeldoc</code>，再重新打开（会重新下载字体）。还不行去 GitHub Issue 贴日志：<code>~/Library/Logs/pdf2zh-desktop/</code>。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>翻译质量不如预期？</h5></div>
+        <p class="desc">服务从 Google 切到 DeepSeek/通义千问，质量提升明显。设置页加术语表，固定专业名词译法。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>能翻日文 / 德文 / 俄文吗？</h5></div>
+        <p class="desc">能。翻译页改「源语言」为对应语种。模型默认都支持 50+ 语言互译。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>能翻成英文 / 日文吗？</h5></div>
+        <p class="desc">能。翻译页改「目标语言」即可。中→英、英→日都很常见。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>翻译历史在哪？怎么备份？</h5></div>
+        <p class="desc">阅读页左栏 = 历史。原始数据：<code>~/.config/pdf2zh/history.json</code>。备份这个文件即可。</p>
+      </div>
+      <div class="card">
+        <div class="top"><h5>API Key 安全吗？</h5></div>
+        <p class="desc">本地存 base64 + 文件权限 600，不上传服务器。如果担心源码可在 GitHub 仓库审计 <code>config_manager.py</code>。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>pdf2zh-desktop · macOS Edition · v2.2.6</p>
+    <p>基于 PDFMathTranslate / MuPDF / PyQt5 ·  <a href="https://github.com/AaronGIG/pdf2zh-desktop">GitHub</a> · QQ 群从「关于」页加</p>
+    <p style="margin-top:14px;font-size:13px;color:#666">出品方 · <a href="https://www.metaeidos.com/" target="_blank" rel="noopener" style="font-family:'DM Sans','Noto Sans SC',sans-serif;font-weight:700;letter-spacing:-0.3px;color:#222">MetaEidos</a> 北京知元智行科技有限公司</p>
+    <p style="margin-top:6px;font-size:11px;color:#aaa">本教程截图来自实际运行的 v2.2.6 · macOS 14 · 1421×894 窗口 · 截图已脱敏</p>
+  </footer>
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        document.querySelectorAll('aside.toc a').forEach(a=>a.classList.remove('active'));
+        const link = document.querySelector(`aside.toc a[href="#${e.target.id}"]`);
+        if(link) link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  document.querySelectorAll('section.tutorial').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

@@ -20,6 +20,17 @@
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Version](https://img.shields.io/badge/Version-2.2.0-blue?style=flat-square)](https://github.com/AaronGIG/pdf2zh-desktop/releases)
 
+<br>
+
+<table align="center"><tr><td align="center" style="padding:18px 28px">
+<h3>📘 强烈推荐先看 → <a href="https://aarongig.github.io/pdf2zh-desktop/">完整图文使用教程（macOS）</a></h3>
+<p>真实截图 · 每一步带红圈编号 · 配 API · 扫描件处理 · 常见问题<br>
+<b>第一次使用？看完这一份就够了，省下你折腾两小时的时间。</b></p>
+<a href="https://aarongig.github.io/pdf2zh-desktop/"><img src="https://img.shields.io/badge/📘 点 这 里 看 教 程-FF6B35?style=for-the-badge&logoColor=white" alt="使用教程"></a>
+</td></tr></table>
+
+<br>
+
 <p>
   <a href="#-三步上手就这么简单">快速开始</a>&ensp;·&ensp;
   <a href="#-桌面版增强亮点">功能特性</a>&ensp;·&ensp;
