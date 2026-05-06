@@ -7,7 +7,7 @@
 <br>
 <br>
 
-# 📖 pdf2zh 桌面版 v2.2.0
+# 📖 pdf2zh 桌面版 v2.2.6
 
 ### 开箱即用的 PDF 学术翻译神器 🚀
 
@@ -39,6 +39,8 @@
   <a href="#-更新日志">更新日志</a>&ensp;·&ensp;
   <a href="README_EN.md">English</a>
 </p>
+
+<sub>💬 用户交流群（QQ）：<b>1094195179</b>（pdf2zh桌面版交流群）</sub>
 
 > 基于 [PDFMathTranslate](https://github.com/Byaidu/PDFMathTranslate)（EMNLP 2025）打造，在原项目基础上大幅增强桌面体验。
 
@@ -129,8 +131,8 @@
 
 | 平台 | 下载 | 大小 | 启动方式 |
 |------|------|------|---------|
-| 🪟 Windows | [`pdf2zh-desktop-win-v2.2.3.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~340MB | 解压 → 双击 `pdf2zh.bat` |
-| 🍎 macOS | [`pdf2zh-desktop-mac-v2.2.3.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/latest) | ~500MB | 解压 → 双击 `pdf2zh.app` |
+| 🪟 Windows | [`pdf2zh-desktop-win-v2.2.5.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/download/v2.2.5/pdf2zh-desktop-win-v2.2.5.zip) | ~340MB | 解压 → 双击 `pdf2zh.bat` |
+| 🍎 macOS | [`pdf2zh-desktop-mac-v2.2.6.zip`](https://github.com/AaronGIG/pdf2zh-desktop/releases/download/v2.2.6/pdf2zh-desktop-mac-v2.2.6.zip) | ~620MB | 解压 → 双击 `pdf2zh.app` |
 
 ### 🖱️ 第二步：启动
 
