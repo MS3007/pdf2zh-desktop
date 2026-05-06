@@ -31,6 +31,23 @@
 
 <br>
 
+### 👀 效果一览
+
+<table>
+<tr>
+<td width="50%" align="center">
+<img src="docs/screenshots/tab-01-translate.png" alt="主界面 · 拖入 PDF 即可翻译"><br>
+<sub><b>① 主界面</b> · 拖入 PDF · 选语言 · 一键开始</sub>
+</td>
+<td width="50%" align="center">
+<img src="docs/screenshots/hero-live.png" alt="Side by Side 阅读 + AI 助手解读"><br>
+<sub><b>② 阅读页</b> · 中外对照 · AI 助手自动解读论文</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
 <p>
   <a href="#-三步上手就这么简单">快速开始</a>&ensp;·&ensp;
   <a href="#-桌面版增强亮点">功能特性</a>&ensp;·&ensp;
